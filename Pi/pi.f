@@ -1,36 +1,25 @@
-      PROGRAM pi  
+      PROGRAM montePi  
       IMPLICIT REAL*8 (A-H,O-Z) 
-      DIMENSION HOLD(1000)
-      
-      CALL SUB1(A,10.0D0,20.0D0)
-      PRINT*, A
-      STop
-      n=10**9
-      aHOLD=0.0D0
-      HOLD=0.0D0
-      DO K=1,100
-      J=0
-      i=0
-      DO WHILE(i.lt.n)
-      i=i+1
-      call random_number(x)
-      call random_number(y)
-      if((x**2 +y**2).LE.1.0D0)then
-       J=J+1
-      END IF
+      PARAMETER (NDH=10**9,ITER=5)
+
+      Pi=0.D0
+      DO K=1,ITER
+       I=0
+       J=0
+       DO WHILE(I.LT.NDH)
+        I=I+1
+        CALL RANDOM_NUMBER(X)
+        CALL RANDOM_NUMBER(Y)
+        IF((X**2 + Y**2).LT.1.0D0)then
+         J=J+1
+        END IF
+       END DO
+       Pi=(Pi+4.0D0*J/I)
+C      print*, 4.0d0*J/I
       END DO
-      HOLD(K)=4.0d0*J/n
-      PRINT*, HOLD(K)
-      aHOLD=ahold+HOLD(K)
-      END DO
-      print*, ahold/(K-1)
+
+      PRINT*, 'Pi is, approximately, equal to',Pi/(K-1)
+      PRINT 102, 'This took',K-1,' iterations with',NDH,' shots.'
+ 102  FORMAT(A,I2,A,I11,A)
  
       END PROGRAM
-
-      SUBROUTINE SUB1(A,B,C)
-      IMPLICIT REAL*8 (A-H,O-Z) 
-      A=B+C
-      END SUBROUTINE
-
-
-
